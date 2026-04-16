@@ -1,33 +1,68 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import { Text, View } from 'react-native';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+function TabIcon({
+  label,
+  focused,
+  icon,
+}: {
+  label: string;
+  focused: boolean;
+  icon: string;
+}) {
+  return (
+    <View className="items-center justify-center pt-1">
+      <Text className={`text-xl ${focused ? 'opacity-100' : 'opacity-40'}`}>
+        {icon}
+      </Text>
+      <Text
+        className={`text-xs mt-0.5 font-medium ${
+          focused ? 'text-primary' : 'text-text-muted'
+        }`}
+      >
+        {label}
+      </Text>
+    </View>
+  );
+}
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF',
+          borderTopColor: '#E5E5E3',
+          borderTopWidth: 1,
+          height: 64,
+          paddingBottom: 8,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon label="Inicio" focused={focused} icon="◈" />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="products"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon label="Productos" focused={focused} icon="▦" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabIcon label="Perfil" focused={focused} icon="◉" />
+          ),
         }}
       />
     </Tabs>
