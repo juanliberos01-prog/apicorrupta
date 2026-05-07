@@ -1,27 +1,21 @@
+import { FontAwesome } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 function TabIcon({
-  label,
   focused,
   icon,
 }: {
-  label: string;
   focused: boolean;
   icon: string;
 }) {
   return (
     <View className="items-center justify-center pt-1">
-      <Text className={`text-xl ${focused ? 'opacity-100' : 'opacity-40'}`}>
-        {icon}
-      </Text>
-      <Text
-        className={`text-xs mt-0.5 font-medium ${
-          focused ? 'text-primary' : 'text-text-muted'
-        }`}
-      >
-        {label}
-      </Text>
+      <FontAwesome
+        name={icon as any}
+        size={26}
+        color={focused ? '#2563EB' : '#A1A1AA'}
+      />
     </View>
   );
 }
@@ -36,8 +30,8 @@ export default function TabsLayout() {
           backgroundColor: '#FFFFFF',
           borderTopColor: '#E5E5E3',
           borderTopWidth: 1,
-          height: 64,
-          paddingBottom: 8,
+          height: 95,
+          paddingBottom: 18,
         },
       }}
     >
@@ -45,7 +39,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon label="Inicio" focused={focused} icon="◈" />
+            <TabIcon focused={focused} icon="home" />
           ),
         }}
       />
@@ -53,7 +47,15 @@ export default function TabsLayout() {
         name="products"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon label="Productos" focused={focused} icon="▦" />
+            <TabIcon focused={focused} icon="shopping-cart" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon="heart" />
           ),
         }}
       />
@@ -61,7 +63,7 @@ export default function TabsLayout() {
         name="profile"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon label="Perfil" focused={focused} icon="◉" />
+            <TabIcon focused={focused} icon="user" />
           ),
         }}
       />

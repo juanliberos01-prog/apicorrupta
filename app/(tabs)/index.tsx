@@ -1,5 +1,6 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { router } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -11,27 +12,42 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import FavoriteButton from '../../components/FavoriteButton';
 import { useAuth } from '../../hooks/useAuth';
+import { favoriteService } from '../../services/favorites';
 import { Product, productService } from '../../services/products';
 
-function ProductCard({ product }: { product: Product & { id: number } }) {
+function ProductCard({
+  product,
+  isFavorite,
+  onToggleFavorite,
+}: {
+  product: Product & { id: number };
+  isFavorite: boolean;
+  onToggleFavorite: () => void;
+}) {
   return (
     <TouchableOpacity
       className="bg-surface border border-border rounded-2xl overflow-hidden mb-4"
       onPress={() => router.push(`/product/${product.id}`)}
       activeOpacity={0.8}
     >
-      {product.imageUrl ? (
-        <Image
-          source={{ uri: product.imageUrl }}
-          className="w-full h-44 bg-surface-secondary"
-          resizeMode="cover"
-        />
-      ) : (
-        <View className="w-full h-44 bg-surface-tertiary items-center justify-center">
-          <Text className="text-text-muted text-sm">Sin imagen</Text>
+      <View className="relative">
+        {product.imageUrl ? (
+          <Image
+            source={{ uri: product.imageUrl }}
+            className="w-full h-44 bg-surface-secondary"
+            resizeMode="cover"
+          />
+        ) : (
+          <View className="w-full h-44 bg-surface-tertiary items-center justify-center">
+            <Text className="text-text-muted text-sm">Sin imagen</Text>
+          </View>
+        )}
+        <View className="absolute top-2 right-2">
+          <FavoriteButton isFavorite={isFavorite} onPress={onToggleFavorite} />
         </View>
-      )}
+      </View>
       <View className="p-4">
         <Text className="text-xs text-text-muted uppercase tracking-wider mb-1">
           {product.brand}
@@ -45,10 +61,19 @@ function ProductCard({ product }: { product: Product & { id: number } }) {
           </Text>
           <View className="bg-surface-secondary px-3 py-1 rounded-full">
             <Text className="text-text-secondary text-xs">
-              Stock: {product.stock}
+              {product.stock > 0 ? `Stock: ${product.stock}` : 'Agotado'}
             </Text>
           </View>
         </View>
+        <TouchableOpacity
+          className="bg-primary rounded-xl py-2.5 mt-3"
+          onPress={() => {}}
+          activeOpacity={0.8}
+        >
+          <Text className="text-text-inverse font-semibold text-center text-sm">
+            Comprar
+          </Text>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -61,10 +86,26 @@ export default function HomeScreen() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<(Product & { id: number })[] | null>(null);
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
 
   useEffect(() => {
     loadProducts();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadFavoriteIds();
+    }, [])
+  );
+
+  async function loadFavoriteIds() {
+    try {
+      const ids = await favoriteService.getIds();
+      setFavoriteIds(ids);
+    } catch {
+      setFavoriteIds([]);
+    }
+  }
 
   async function loadProducts() {
     try {
@@ -95,6 +136,11 @@ export default function HomeScreen() {
     } catch {
       setSearchResults([]);
     }
+  }
+
+  async function handleToggleFavorite(productId: number) {
+    await favoriteService.toggle(productId);
+    loadFavoriteIds();
   }
 
   const displayProducts = searchResults !== null ? searchResults : products;
@@ -131,8 +177,14 @@ export default function HomeScreen() {
         <FlatList
           data={displayProducts}
           keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => <ProductCard product={item} />}
-          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}
+          renderItem={({ item }) => (
+            <ProductCard
+              product={item}
+              isFavorite={favoriteIds.includes(item.id)}
+              onToggleFavorite={() => handleToggleFavorite(item.id)}
+            />
+          )}
+          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />

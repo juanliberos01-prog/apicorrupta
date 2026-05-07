@@ -38,8 +38,8 @@ function SectionHeader({ title }: { title: string }) {
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <View className="flex-row justify-between items-center py-3 border-b border-border">
-      <Text className="text-text-secondary text-sm">{label}</Text>
-      <Text className="text-text-primary text-sm font-medium">{value || '—'}</Text>
+      <Text className="text-text-secondary text-base">{label}</Text>
+      <Text className="text-text-primary text-base font-medium">{value || '—'}</Text>
     </View>
   );
 }
@@ -338,16 +338,16 @@ export default function ProfileScreen() {
             >
               <View className="flex-row justify-between items-start">
                 <View className="flex-1">
-                  <Text className="text-text-primary font-medium text-sm">{addr.street}</Text>
-                  <Text className="text-text-secondary text-xs mt-0.5">
+                  <Text className="text-text-primary font-medium text-base">{addr.street}</Text>
+                  <Text className="text-text-secondary text-sm mt-0.5">
                     {addr.city}, {addr.state}, {addr.country}
                   </Text>
                   {addr.zipCode && (
-                    <Text className="text-text-muted text-xs mt-0.5">CP: {addr.zipCode}</Text>
+                    <Text className="text-text-muted text-sm mt-0.5">CP: {addr.zipCode}</Text>
                   )}
                   {addr.isDefault && (
                     <View className="bg-primary/10 px-2 py-0.5 rounded-full mt-2 self-start">
-                      <Text className="text-primary text-xs">Predeterminada</Text>
+                      <Text className="text-primary text-sm">Predeterminada</Text>
                     </View>
                   )}
                 </View>

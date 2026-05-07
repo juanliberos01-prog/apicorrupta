@@ -1,18 +1,21 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { router } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    Image,
-    RefreshControl,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Image,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import FavoriteButton from '../../components/FavoriteButton';
 import { useAuth } from '../../hooks/useAuth';
+import { favoriteService } from '../../services/favorites';
 import { Product, productService } from '../../services/products';
 
 function SellerProductCard({
@@ -82,12 +85,28 @@ export default function ProductsScreen() {
   const [products, setProducts] = useState<(Product & { id: number })[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
 
   const isSeller = user?.role === 'SELLER' || user?.role === 'ADMIN';
 
   useEffect(() => {
     loadProducts();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadFavoriteIds();
+    }, [])
+  );
+
+  async function loadFavoriteIds() {
+    try {
+      const ids = await favoriteService.getIds();
+      setFavoriteIds(ids);
+    } catch {
+      setFavoriteIds([]);
+    }
+  }
 
   async function loadProducts() {
     try {
@@ -140,6 +159,11 @@ export default function ProductsScreen() {
     }
   }
 
+  async function handleToggleFavorite(productId: number) {
+    await favoriteService.toggle(productId);
+    loadFavoriteIds();
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-surface">
       <View className="px-5 pt-4 pb-3">
@@ -187,17 +211,27 @@ export default function ProductsScreen() {
                 onPress={() => router.push(`/product/${item.id}`)}
                 activeOpacity={0.8}
               >
-                {item.imageUrl ? (
-                  <Image
-                    source={{ uri: item.imageUrl }}
-                    className="w-full h-40 bg-surface-secondary"
-                    resizeMode="cover"
-                  />
-                ) : (
-                  <View className="w-full h-40 bg-surface-tertiary items-center justify-center">
-                    <Text className="text-text-muted text-sm">Sin imagen</Text>
+                <View className="relative">
+                  {item.imageUrl ? (
+                    <Image
+                      source={{ uri: item.imageUrl }}
+                      className="w-full h-40 bg-surface-secondary"
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <View className="w-full h-40 bg-surface-tertiary items-center justify-center">
+                      <Text className="text-text-muted text-sm">Sin imagen</Text>
+                    </View>
+                  )}
+                  <View className="absolute top-2 right-2">
+                    <FavoriteButton
+                      isFavorite={favoriteIds.includes(item.id)}
+                      onPress={async () => {
+                        await handleToggleFavorite(item.id);
+                      }}
+                    />
                   </View>
-                )}
+                </View>
                 <View className="p-4">
                   <Text className="text-text-primary font-semibold" numberOfLines={1}>
                     {item.name}
@@ -209,7 +243,7 @@ export default function ProductsScreen() {
               </TouchableOpacity>
             )
           }
-          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}
+          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />

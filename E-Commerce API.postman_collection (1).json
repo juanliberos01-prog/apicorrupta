@@ -1,0 +1,4679 @@
+{
+  "info": {
+    "_postman_id": "1edbd09c-b152-4342-b4c6-b389fadabc57",
+    "name": "E-Commerce API",
+    "description": "API RESTful reactiva para una plataforma de e-commerce completa.\n\nEsta API utiliza arquitectura limpia/hexagonal y está construida con Spring Boot WebFlux para máximo rendimiento.\n\n## Características Principales\n- Autenticación con JWT Bearer Token\n- Gestión de productos con filtros avanzados\n- Sistema de órdenes con estados\n- Gestión de direcciones de usuario\n- Sistema de reseñas de productos\n- Gestión de categorías\n\n## Autenticación\nEsta API utiliza **JWT Bearer Token** para endpoints protegidos:\n1. Obtén un token en `POST /api/auth/login`\n2. Registra una nueva cuenta en `POST /api/auth/register`\n3. Haz clic en el botón **Authorize** e ingresa: `Bearer {token}`\n\n## Seguridad de Contraseñas\nLas contraseñas deben enviarse **cifradas con AES-256-CBC**.\nConsulta `docs/api-test-credentials.md` para credenciales de prueba.\n\n## Códigos de Estado HTTP\n- `200 OK`: Solicitud exitosa\n- `201 Created`: Recurso creado exitosamente\n- `400 Bad Request`: Validación fallida\n- `401 Unauthorized`: Falta autenticación o token inválido\n- `403 Forbidden`: Permisos insuficientes\n- `404 Not Found`: Recurso no encontrado\n- `409 Conflict`: Conflicto (ej: recurso duplicado)\n- `500 Internal Server Error`: Error del servidor\n\n\nContact Support:\n Name: E-Commerce Team\n Email: dev@ecommerce.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "5973857"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "users",
+          "item": [
+            {
+              "name": "me",
+              "item": [
+                {
+                  "name": "personal-info",
+                  "item": [
+                    {
+                      "name": "Get my personal info",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/me/personal-info",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            "me",
+                            "personal-info"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/users/me/personal-info",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "users",
+                                "me",
+                                "personal-info"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Update my personal info",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"firstName\": \"Diego\",\n  \"lastName\": \"Martínez Sánchez\",\n  \"phoneNumber\": \"+57 300 123 4567\",\n  \"dateOfBirth\": \"1990-05-15\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/me/personal-info",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            "me",
+                            "personal-info"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"firstName\": \"Diego\",\n  \"lastName\": \"Martínez Sánchez\",\n  \"phoneNumber\": \"+57 300 123 4567\",\n  \"dateOfBirth\": \"1990-05-15\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/users/me/personal-info",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "users",
+                                "me",
+                                "personal-info"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "addresses",
+                  "item": [
+                    {
+                      "name": "{addressId}",
+                      "item": [
+                        {
+                          "name": "Update an address",
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"city\": \"Bogotá\",\n  \"country\": \"Colombia\",\n  \"state\": \"Cundinamarca\",\n  \"street\": \"Carrera 7 #45-89, Apartamento 602\",\n  \"zipCode\": \"110111\",\n  \"isDefault\": true\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/users/me/addresses/:addressId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "users",
+                                "me",
+                                "addresses",
+                                ":addressId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "addressId",
+                                  "value": "5909"
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"city\": \"Bogotá\",\n  \"country\": \"Colombia\",\n  \"state\": \"Cundinamarca\",\n  \"street\": \"Carrera 7 #45-89, Apartamento 602\",\n  \"zipCode\": \"110111\",\n  \"isDefault\": true\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/users/me/addresses/:addressId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "users",
+                                    "me",
+                                    "addresses",
+                                    ":addressId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "addressId",
+                                      "value": "5909"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Delete an address",
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/users/me/addresses/:addressId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "users",
+                                "me",
+                                "addresses",
+                                ":addressId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "addressId",
+                                  "value": "5909"
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/users/me/addresses/:addressId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "users",
+                                    "me",
+                                    "addresses",
+                                    ":addressId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "addressId",
+                                      "value": "5909"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Get my addresses",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/me/addresses",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            "me",
+                            "addresses"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/users/me/addresses",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "users",
+                                "me",
+                                "addresses"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Add a new address",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"city\": \"Bogotá\",\n  \"country\": \"Colombia\",\n  \"state\": \"Cundinamarca\",\n  \"street\": \"Carrera 7 #45-89, Apartamento 602\",\n  \"zipCode\": \"110111\",\n  \"isDefault\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/me/addresses",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            "me",
+                            "addresses"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"city\": \"Bogotá\",\n  \"country\": \"Colombia\",\n  \"state\": \"Cundinamarca\",\n  \"street\": \"Carrera 7 #45-89, Apartamento 602\",\n  \"zipCode\": \"110111\",\n  \"isDefault\": true\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/users/me/addresses",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "users",
+                                "me",
+                                "addresses"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Obtener mi perfil",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/users/me",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "users",
+                        "me"
+                      ]
+                    },
+                    "description": "Retorna la información del perfil del usuario autenticado. Requiere autenticación."
+                  },
+                  "response": [
+                    {
+                      "name": "Perfil obtenido exitosamente",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/me",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            "me"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "No autenticado",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/me",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            "me"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Error interno del servidor",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/me",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            "me"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Deactivate my account",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/users/me",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "users",
+                        "me"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/users/me",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "users",
+                            "me"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "products",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Obtener producto con detalle",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "1",
+                          "description": "ID único del producto"
+                        }
+                      ]
+                    },
+                    "description": "Retorna la información completa de un producto específico incluyendo detalles. No requiere autenticación."
+                  },
+                  "response": [
+                    {
+                      "name": "Producto encontrado y retornado",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID único del producto"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Producto no encontrado",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID único del producto"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Error interno del servidor",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID único del producto"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Actualizar producto",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"categoryId\": 5,\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "1",
+                          "description": "ID del producto a actualizar"
+                        }
+                      ]
+                    },
+                    "description": "Actualiza los datos de un producto existente. Requiere autenticación. Los vendedores solo pueden actualizar sus propios productos."
+                  },
+                  "response": [
+                    {
+                      "name": "Producto actualizado exitosamente",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"categoryId\": 5,\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a actualizar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Validación fallida",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"categoryId\": 5,\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a actualizar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "No autenticado",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"categoryId\": 5,\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a actualizar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Prohibido - Sin permisos para actualizar este producto",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"categoryId\": 5,\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a actualizar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Producto no encontrado",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"categoryId\": 5,\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a actualizar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Error interno del servidor",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"categoryId\": 5,\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a actualizar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Desactivar producto",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "1",
+                          "description": "ID del producto a desactivar"
+                        }
+                      ]
+                    },
+                    "description": "Desactiva un producto (eliminación lógica). Requiere autenticación. Los vendedores solo pueden desactivar sus propios productos."
+                  },
+                  "response": [
+                    {
+                      "name": "Producto desactivado exitosamente",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a desactivar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "No autenticado",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a desactivar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Prohibido - Sin permisos para desactivar este producto",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a desactivar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Producto no encontrado",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a desactivar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    },
+                    {
+                      "name": "Error interno del servidor",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1",
+                              "description": "ID del producto a desactivar"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "seller",
+              "item": [
+                {
+                  "name": "{sellerId}",
+                  "item": [
+                    {
+                      "name": "Productos por vendedor",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/seller/:sellerId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            "seller",
+                            ":sellerId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "sellerId",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/products/seller/:sellerId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "products",
+                                "seller",
+                                ":sellerId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "sellerId",
+                                  "value": "5909"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "search",
+              "item": [
+                {
+                  "name": "Buscar productos por nombre",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/search?name=",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "key": "name",
+                          "value": ""
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/search?name=",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            "search"
+                          ],
+                          "query": [
+                            {
+                              "key": "name",
+                              "value": ""
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "price",
+              "item": [
+                {
+                  "name": "Filtrar por rango de precio",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/price?min=0&max=999999",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        "price"
+                      ],
+                      "query": [
+                        {
+                          "key": "min",
+                          "value": "0"
+                        },
+                        {
+                          "key": "max",
+                          "value": "999999"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/price?min=0&max=999999",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            "price"
+                          ],
+                          "query": [
+                            {
+                              "key": "min",
+                              "value": "0"
+                            },
+                            {
+                              "key": "max",
+                              "value": "999999"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "filter",
+              "item": [
+                {
+                  "name": "Filtro avanzado de productos",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/filter?name=string&categoryId=5909&minPrice=6787.376242450416&maxPrice=6787.376242450416&brand=string&color=string&minWeight=6787.376242450416&maxWeight=6787.376242450416&minStock=1677&inStockOnly=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        "filter"
+                      ],
+                      "query": [
+                        {
+                          "key": "name",
+                          "value": "string"
+                        },
+                        {
+                          "key": "categoryId",
+                          "value": "5909"
+                        },
+                        {
+                          "key": "minPrice",
+                          "value": "6787.376242450416"
+                        },
+                        {
+                          "key": "maxPrice",
+                          "value": "6787.376242450416"
+                        },
+                        {
+                          "key": "brand",
+                          "value": "string"
+                        },
+                        {
+                          "key": "color",
+                          "value": "string"
+                        },
+                        {
+                          "key": "minWeight",
+                          "value": "6787.376242450416"
+                        },
+                        {
+                          "key": "maxWeight",
+                          "value": "6787.376242450416"
+                        },
+                        {
+                          "key": "minStock",
+                          "value": "1677"
+                        },
+                        {
+                          "key": "inStockOnly",
+                          "value": "false"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/filter?name=string&categoryId=5909&minPrice=6787.376242450416&maxPrice=6787.376242450416&brand=string&color=string&minWeight=6787.376242450416&maxWeight=6787.376242450416&minStock=1677&inStockOnly=false",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            "filter"
+                          ],
+                          "query": [
+                            {
+                              "key": "name",
+                              "value": "string"
+                            },
+                            {
+                              "key": "categoryId",
+                              "value": "5909"
+                            },
+                            {
+                              "key": "minPrice",
+                              "value": "6787.376242450416"
+                            },
+                            {
+                              "key": "maxPrice",
+                              "value": "6787.376242450416"
+                            },
+                            {
+                              "key": "brand",
+                              "value": "string"
+                            },
+                            {
+                              "key": "color",
+                              "value": "string"
+                            },
+                            {
+                              "key": "minWeight",
+                              "value": "6787.376242450416"
+                            },
+                            {
+                              "key": "maxWeight",
+                              "value": "6787.376242450416"
+                            },
+                            {
+                              "key": "minStock",
+                              "value": "1677"
+                            },
+                            {
+                              "key": "inStockOnly",
+                              "value": "false"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "category",
+              "item": [
+                {
+                  "name": "{categoryId}",
+                  "item": [
+                    {
+                      "name": "Productos por categoría",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/products/category/:categoryId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "products",
+                            "category",
+                            ":categoryId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "categoryId",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/products/category/:categoryId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "products",
+                                "category",
+                                ":categoryId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "categoryId",
+                                  "value": "5909"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Listar productos activos",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                },
+                "description": "Retorna una lista de todos los productos activos disponibles en el catálogo. No requiere autenticación."
+              },
+              "response": [
+                {
+                  "name": "Lista de productos obtenida exitosamente",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                },
+                {
+                  "name": "Error interno del servidor",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Crear producto",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryId\": 5,\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                },
+                "description": "Crea un nuevo producto. Requiere autenticación con rol de vendedor o administrador."
+              },
+              "response": [
+                {
+                  "name": "Producto creado exitosamente",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"categoryId\": 5,\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                },
+                {
+                  "name": "Validación fallida - Datos inválidos o incompletos",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"categoryId\": 5,\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                },
+                {
+                  "name": "No autenticado - Token faltante o inválido",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"categoryId\": 5,\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                },
+                {
+                  "name": "Prohibido - Usuario sin permisos de vendedor/administrador",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"categoryId\": 5,\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                },
+                {
+                  "name": "Error interno del servidor",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"categoryId\": 5,\n  \"name\": \"Teléfono Inteligente Samsung Galaxy A13\",\n  \"price\": 299999.99,\n  \"stock\": 50,\n  \"imageUrl\": \"https://images.example.com/galaxy-a13.jpg\",\n  \"description\": \"Teléfono inteligente con pantalla AMOLED de 6.1 pulgadas, procesador MediaTek y 4GB de RAM\",\n  \"brand\": \"Samsung\",\n  \"model\": \"Galaxy A13 SM-A135F\",\n  \"weight\": 0.192,\n  \"color\": \"Negro Profundo\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "orders",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "status",
+                  "item": [
+                    {
+                      "name": "Update order status",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/orders/:id/status?status=string",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "orders",
+                            ":id",
+                            "status"
+                          ],
+                          "query": [
+                            {
+                              "key": "status",
+                              "value": "string"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/orders/:id/status?status=string",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "orders",
+                                ":id",
+                                "status"
+                              ],
+                              "query": [
+                                {
+                                  "key": "status",
+                                  "value": "string"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "5909"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "cancel",
+                  "item": [
+                    {
+                      "name": "Cancel an order",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/orders/:id/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "orders",
+                            ":id",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/orders/:id/cancel",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "orders",
+                                ":id",
+                                "cancel"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "5909"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Get order by ID",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/orders/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "orders",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5909"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/orders/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "orders",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "my",
+              "item": [
+                {
+                  "name": "Get my orders",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/orders/my",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "orders",
+                        "my"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/orders/my",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "orders",
+                            "my"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Create a new order",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"productId\": 12,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 12,\n      \"quantity\": 2\n    }\n  ],\n  \"shippingAddressId\": 3\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "orders"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"items\": [\n    {\n      \"productId\": 12,\n      \"quantity\": 2\n    },\n    {\n      \"productId\": 12,\n      \"quantity\": 2\n    }\n  ],\n  \"shippingAddressId\": 3\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/orders",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "orders"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "categories",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Obtener categoría por ID",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/categories/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "categories",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5909"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/categories/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "categories",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Actualizar categoría",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Electrónica y Accesorios\",\n  \"description\": \"Productos electrónicos modernos, teléfonos inteligentes, tablets y accesorios relacionados\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/categories/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "categories",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5909"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Electrónica y Accesorios\",\n  \"description\": \"Productos electrónicos modernos, teléfonos inteligentes, tablets y accesorios relacionados\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/categories/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "categories",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Desactivar categoría",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/categories/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "categories",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5909"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/categories/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "categories",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Listar categorías activas",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/categories",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/categories",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "categories"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Crear categoría",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Electrónica y Accesorios\",\n  \"description\": \"Productos electrónicos modernos, teléfonos inteligentes, tablets y accesorios relacionados\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/categories",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Electrónica y Accesorios\",\n  \"description\": \"Productos electrónicos modernos, teléfonos inteligentes, tablets y accesorios relacionados\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/categories",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "categories"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "reviews",
+          "item": [
+            {
+              "name": "product",
+              "item": [
+                {
+                  "name": "{productId}",
+                  "item": [
+                    {
+                      "name": "Get reviews by product",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/reviews/product/:productId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "reviews",
+                            "product",
+                            ":productId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "productId",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/reviews/product/:productId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "reviews",
+                                "product",
+                                ":productId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "productId",
+                                  "value": "5909"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "my",
+              "item": [
+                {
+                  "name": "Get my reviews",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/reviews/my",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "reviews",
+                        "my"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/reviews/my",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "reviews",
+                            "my"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Delete a review",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/reviews/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "reviews",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5909"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/reviews/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "reviews",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5909"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Create a new review",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": 12,\n  \"rating\": 5,\n  \"comment\": \"Excelente producto, muy buena calidad y llegó antes del tiempo estimado. Lo recomiendo ampliamente.\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/reviews",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reviews"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"productId\": 12,\n  \"rating\": 5,\n  \"comment\": \"Excelente producto, muy buena calidad y llegó antes del tiempo estimado. Lo recomiendo ampliamente.\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/reviews",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "reviews"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "auth",
+          "item": [
+            {
+              "name": "register",
+              "item": [
+                {
+                  "name": "Registrar nuevo usuario",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"maria.garcia@example.com\",\n  \"encryptedPassword\": \"FND4uozSl1dirKV8acl0cA==\",\n  \"firstName\": \"Carlos\",\n  \"identificationNumber\": \"1023456789\",\n  \"lastName\": \"Rodríguez López\",\n  \"role\": \"BUYER\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/auth/register",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "auth",
+                        "register"
+                      ]
+                    },
+                    "description": "Crea una nueva cuenta de usuario. La contraseña debe estar cifrada con AES-256-CBC. Retorna los datos del usuario creado."
+                  },
+                  "response": [
+                    {
+                      "name": "Usuario registrado exitosamente",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"maria.garcia@example.com\",\n  \"encryptedPassword\": \"FND4uozSl1dirKV8acl0cA==\",\n  \"firstName\": \"Carlos\",\n  \"identificationNumber\": \"1023456789\",\n  \"lastName\": \"Rodríguez López\",\n  \"role\": \"BUYER\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/register",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "register"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"statusCode\": 201,\n  \"message\": \"User registered successfully\",\n  \"data\": {\n    \"id\": 1,\n    \"identificationNumber\": \"12345678\",\n    \"email\": \"user@example.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"role\": \"CUSTOMER\"\n  }\n}"
+                    },
+                    {
+                      "name": "Conflicto - Email ya existe en la base de datos",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"maria.garcia@example.com\",\n  \"encryptedPassword\": \"FND4uozSl1dirKV8acl0cA==\",\n  \"firstName\": \"Carlos\",\n  \"identificationNumber\": \"1023456789\",\n  \"lastName\": \"Rodríguez López\",\n  \"role\": \"BUYER\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/register",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "register"
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"statusCode\": 409,\n  \"message\": \"Email already exists\",\n  \"data\": null\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "login",
+              "item": [
+                {
+                  "name": "Iniciar sesión",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "const response = pm.response.json()\r",
+                          "\r",
+                          "pm.collectionVariables.set(\"AccessToken\", response.data.token);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "noauth"
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"admin@ecommerce.com\",\n  \"encryptedPassword\": \"+rz+UN+Z4eHwyLLs5RXkLg==\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/auth/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "auth",
+                        "login"
+                      ]
+                    },
+                    "description": "Autentica un usuario con email y contraseña cifrada (AES-256-CBC). Retorna un token JWT para usar en endpoints protegidos."
+                  },
+                  "response": [
+                    {
+                      "name": "Inicio de sesión exitoso - Retorna token JWT",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"juan.perez@example.com\",\n  \"encryptedPassword\": \"FND4uozSl1dirKV8acl0cA==\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/login",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "login"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"statusCode\": 200,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"userId\": 1,\n    \"email\": \"user@example.com\",\n    \"role\": \"CUSTOMER\"\n  }\n}"
+                    },
+                    {
+                      "name": "Credenciales inválidas - Email o contraseña incorrectos",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"juan.perez@example.com\",\n  \"encryptedPassword\": \"FND4uozSl1dirKV8acl0cA==\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/login",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "login"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"statusCode\": 401,\n  \"message\": \"Invalid credentials\",\n  \"data\": null\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "people",
+              "item": [
+                {
+                  "name": "{id}",
+                  "item": [
+                    {
+                      "name": "Get person by ID",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/people/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "people",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/people/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "people",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "search",
+                  "item": [
+                    {
+                      "name": "Search people by email",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/people/search?email=",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "people",
+                            "search"
+                          ],
+                          "query": [
+                            {
+                              "key": "email",
+                              "value": ""
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/people/search?email=",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "people",
+                                "search"
+                              ],
+                              "query": [
+                                {
+                                  "key": "email",
+                                  "value": ""
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "country",
+                  "item": [
+                    {
+                      "name": "{country}",
+                      "item": [
+                        {
+                          "name": "Get people by country",
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/people/country/:country",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "people",
+                                "country",
+                                ":country"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "country",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/people/country/:country",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "people",
+                                    "country",
+                                    ":country"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "country",
+                                      "value": "string"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "city",
+                  "item": [
+                    {
+                      "name": "{city}",
+                      "item": [
+                        {
+                          "name": "Get people by city",
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/people/city/:city",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "people",
+                                "city",
+                                ":city"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "city",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/people/city/:city",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "people",
+                                    "city",
+                                    ":city"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "city",
+                                      "value": "string"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Get all people",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/people",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v1",
+                        "people"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/people",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "people"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": {},\n  \"timestamp\": \"2009-06-16T15:57:34.778Z\"\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "AccessToken",
+      "value": ""
+    }
+  ]
+}

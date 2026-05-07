@@ -1,5 +1,6 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { router, useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     Image,
@@ -9,7 +10,9 @@ import {
     View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import FavoriteButton from '../../components/FavoriteButton';
 import { useAuth } from '../../hooks/useAuth';
+import { favoriteService } from '../../services/favorites';
 import { Product, productService } from '../../services/products';
 
 function DetailRow({ label, value }: { label: string; value: string | number }) {
@@ -26,12 +29,32 @@ export default function ProductDetailScreen() {
   const { user } = useAuth();
   const [product, setProduct] = useState<(Product & { id: number }) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const isSeller = user?.role === 'SELLER' || user?.role === 'ADMIN';
 
   useEffect(() => {
     if (id) loadProduct();
   }, [id]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadFavoriteState();
+    }, [id])
+  );
+
+  async function loadFavoriteState() {
+    if (!id) {
+      setIsFavorite(false);
+      return;
+    }
+    try {
+      const favorite = await favoriteService.isFavorite(Number(id));
+      setIsFavorite(favorite);
+    } catch {
+      setIsFavorite(false);
+    }
+  }
 
   async function loadProduct() {
     try {
@@ -42,6 +65,12 @@ export default function ProductDetailScreen() {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  async function handleToggleFavorite() {
+    if (!id) return;
+    await favoriteService.toggle(Number(id));
+    loadFavoriteState();
   }
 
   if (isLoading) {
@@ -72,11 +101,11 @@ export default function ProductDetailScreen() {
         {/* Back button overlay */}
         <View className="absolute top-4 left-4 z-10">
           <TouchableOpacity
-            className="bg-surface/90 border border-border rounded-full w-10 h-10 items-center justify-center"
+            className="bg-surface/90 border border-border rounded-full w-14 h-14 items-center justify-center"
             onPress={() => router.back()}
             activeOpacity={0.8}
           >
-            <Text className="text-text-primary font-medium text-base">←</Text>
+            <Text className="text-text-primary font-medium text-3xl">←</Text>
           </TouchableOpacity>
         </View>
 
@@ -96,12 +125,17 @@ export default function ProductDetailScreen() {
         <View className="px-5 pt-5 pb-10">
           {/* Title area */}
           <View className="mb-4">
-            <Text className="text-text-muted text-xs uppercase tracking-widest mb-1">
-              {product.brand} · {product.model}
-            </Text>
-            <Text className="text-text-primary text-2xl font-bold tracking-tight leading-tight">
-              {product.name}
-            </Text>
+            <View className="flex-row justify-between items-start">
+              <View className="flex-1 pr-3">
+                <Text className="text-text-muted text-xs uppercase tracking-widest mb-1">
+                  {product.brand} · {product.model}
+                </Text>
+                <Text className="text-text-primary text-2xl font-bold tracking-tight leading-tight">
+                  {product.name}
+                </Text>
+              </View>
+              <FavoriteButton isFavorite={isFavorite} onPress={handleToggleFavorite} />
+            </View>
             <View className="flex-row items-center mt-3 gap-3">
               <Text className="text-primary text-3xl font-bold">
                 ${product.price?.toLocaleString('es-CO')}
@@ -116,7 +150,7 @@ export default function ProductDetailScreen() {
                     product.stock > 0 ? 'text-success' : 'text-danger'
                   }`}
                 >
-                  {product.stock > 0 ? `${product.stock} disponibles` : 'Sin stock'}
+                  {product.stock > 0 ? `${product.stock} disponibles` : 'Agotado'}
                 </Text>
               </View>
             </View>

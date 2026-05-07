@@ -77,7 +77,7 @@ export default function ProductForm({
       description: initialValues?.description || '',
       brand: initialValues?.brand || '',
       model: initialValues?.model || '',
-      weight: initialValues?.weight,
+      weight: initialValues?.weight ?? 0,
       color: initialValues?.color || '',
       imageUrl: initialValues?.imageUrl || '',
     },
